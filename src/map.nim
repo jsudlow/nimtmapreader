@@ -1,4 +1,4 @@
-import tables, strutils
+import tables, strutils,layer
 
 type
   Orientation* = enum
@@ -12,8 +12,9 @@ type
     tileHeight*: int
     tileWidth*: int
     version*: int
+    layers*: seq[Layer]
     
-proc newMap*(height,width :int, orientation :string, tileHeight :int = 32, tileWidth:int = 32, version :int = 0 ): ref Map =
+proc newMap*(height,width :int, orientation :string, tileHeight :int = 32, tileWidth :int = 32, version :int = 0 ): ref Map =
   result = new Map
   result.height = height
   result.width = width

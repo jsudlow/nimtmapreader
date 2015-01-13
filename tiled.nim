@@ -14,3 +14,6 @@ echo "Attempting to construct map from JSON"
 
 var Map = mapFromJSON(jobj)
 echo Map.tileHeight
+
+echo "Attempting to construct layers that will go onto our Map object"
+layersFromJSON(jobj)
