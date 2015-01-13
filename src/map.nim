@@ -1,4 +1,4 @@
-import tables, strutils,layer
+import tables, strutils,layer,tileset
 
 
 type
@@ -14,6 +14,7 @@ type
     tileWidth*: int
     version*: int
     layers*: seq[ref Layer]
+    tilesets*: seq[ref Tileset]
 
 proc newMap*(width, height: int, tWidth = 32, tHeight = 32, orientation = "orthogonal", version = 0): ref Map =
   result = new Map
@@ -25,6 +26,7 @@ proc newMap*(width, height: int, tWidth = 32, tHeight = 32, orientation = "ortho
   result.tileWidth = tHeight
   result.version = version
   result.layers = newSeq[ref Layer]()
+  result.tilesets = newSeq[ref Tileset]()
 
 proc newMapFromJSON*(jobj): ref Map =
   result = newMap(
@@ -37,3 +39,8 @@ proc newMapFromJSON*(jobj): ref Map =
 
   for layer in jobj["layers"]:
     result.layers.add(newLayerFromJSON(layer))
+
+  for tileset in jobj["tilesets"]:
+    result.tilesets.add(newTilesetFromJSON(tileset))
+
+

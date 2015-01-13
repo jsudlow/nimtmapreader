@@ -1,7 +1,7 @@
 import src/map, src/layer, src/tileset, src/image, src/tile, streams,hashes,strutils,lexbase,unicode,json
 
 #Get the json saved on our disk
-var jsonStreamFromFile = newFilestream("map_files/nimrodhunter", fmRead)
+var jsonStreamFromFile = newFilestream("map_files/nimrodhunter.json", fmRead)
 
 #Parse the json
 var jobj = parseJson(jsonStreamFromFile,"error.json")
