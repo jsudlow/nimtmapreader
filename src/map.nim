@@ -1,5 +1,6 @@
 import tables, strutils,layer
 
+
 type
   Orientation* = enum
     orthogonal,isometric,staggered
@@ -13,30 +14,26 @@ type
     tileWidth*: int
     version*: int
     layers*: seq[ref Layer]
-    
-proc newMap*(height,width :int, orientation :string, tileHeight :int = 32, tileWidth :int = 32, version :int = 0 ): ref Map =
+
+proc newMap*(width, height: int, tWidth = 32, tHeight = 32, orientation = "orthogonal", version = 0): ref Map =
   result = new Map
   result.height = height
   result.width = width
   result.orientation = orientation
   result.properties = initTable[string,string]()
-  result.tileHeight = tileHeight
-  result.tileWidth = tileWidth
+  result.tileHeight = tWidth
+  result.tileWidth = tHeight
   result.version = version
   result.layers = newSeq[ref Layer]()
-  
+
 proc newMapFromJSON*(jobj): ref Map =
-  var height = parseInt($jobj["height"])
-  var width = parseInt($jobj["width"])
-  var orientation = $jobj["orientation"]
-  var tileHeight = parseInt($jobj["tileheight"])
-  var tileWidth = parseInt($jobj["tilewidth"])
-  var version = parseInt($jobj["version"])
-  
-  result = newMap(height,width,orientation,tileHeight,tileWidth,version)
+  result = newMap(
+    jobj["height"].num.int,
+    jobj["width"].num.int,
+    jobj["tileheight"].num.int,
+    jobj["tilewidth"].num.int,
+    jobj["orientation"].str,
+    jobj["version"].num.int)
 
   for layer in jobj["layers"]:
-    var new_layer = newLayerFromJSON(layer)
-    result.layers.add(new_layer)
-    echo layer
-  
+    result.layers.add(newLayerFromJSON(layer))
