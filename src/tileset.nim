@@ -38,5 +38,5 @@ proc newTilesetFromJSON*(tileset): ref Tileset =
     tileset["tilewidth"].num.int
     )
   #need to set properties
-  for key,value in tileset["properties"]:
-    result.properties.add($(key),$(value)) 
+  for key, value in tileset["properties"]:
+    result.properties.add(key, $value)
