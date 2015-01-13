@@ -12,8 +12,8 @@ assert (jobj.kind == JObject)
 #Print out a few check values to make sure we got the right stuff
 echo "Attempting to construct map from JSON"
 
-var Map = mapFromJSON(jobj)
+var Map = newMapFromJSON(jobj)
 echo Map.tileHeight
 
-echo "Attempting to construct layers that will go onto our Map object"
-layersFromJSON(jobj)
+#echo "Attempting to construct layers that will go onto our Map object"
+#newLayerFromJSON(jobj,Map)

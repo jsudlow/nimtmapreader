@@ -12,7 +12,7 @@ type
     tileHeight*: int
     tileWidth*: int
     version*: int
-    layers*: seq[Layer]
+    layers*: seq[ref Layer]
     
 proc newMap*(height,width :int, orientation :string, tileHeight :int = 32, tileWidth :int = 32, version :int = 0 ): ref Map =
   result = new Map
@@ -23,8 +23,9 @@ proc newMap*(height,width :int, orientation :string, tileHeight :int = 32, tileW
   result.tileHeight = tileHeight
   result.tileWidth = tileWidth
   result.version = version
+  result.layers = newSeq[ref Layer]()
   
-proc mapFromJSON*(jobj): ref Map =
+proc newMapFromJSON*(jobj): ref Map =
   var height = parseInt($jobj["height"])
   var width = parseInt($jobj["width"])
   var orientation = $jobj["orientation"]
@@ -33,4 +34,9 @@ proc mapFromJSON*(jobj): ref Map =
   var version = parseInt($jobj["version"])
   
   result = newMap(height,width,orientation,tileHeight,tileWidth,version)
+
+  for layer in jobj["layers"]:
+    var new_layer = newLayerFromJSON(layer)
+    result.layers.add(new_layer)
+    echo layer
   
